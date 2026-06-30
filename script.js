@@ -6,7 +6,6 @@
 (function () {
   "use strict";
 
-  // Fallback delay if transitionend does not fire — sync with CSS animation total (~1.7s)
   var ENVELOPE_ANIMATION_MS = 1750;
   var VIDEO_FADE_DELAY_MS = 150;
   var OPEN_DELAY_MS = 120;
@@ -26,6 +25,7 @@
   var hasOpened = false;
   var hasRevealed = false;
   var revealTimer = null;
+  var videoPrepared = false;
 
   if (!openBtn || !envelope || !videoSection || !video) {
     return;
@@ -73,6 +73,39 @@
     hintHideTimer = window.setTimeout(hideVideoHint, HINT_VISIBLE_MS);
   }
 
+  function prepareVideo() {
+    if (videoPrepared) {
+      return;
+    }
+    videoPrepared = true;
+    video.preload = "auto";
+    video.load();
+  }
+
+  function tryPlayVideo() {
+    if (video.readyState >= 2) {
+      startPlayback();
+      return;
+    }
+
+    function onCanPlay() {
+      video.removeEventListener("canplay", onCanPlay);
+      startPlayback();
+    }
+
+    video.addEventListener("canplay", onCanPlay);
+  }
+
+  function startPlayback() {
+    var playPromise = video.play();
+
+    if (playPromise && typeof playPromise.then === "function") {
+      playPromise.catch(function () {
+        video.setAttribute("controls", "");
+      });
+    }
+  }
+
   function revealVideo() {
     if (hasRevealed) {
       return;
@@ -94,6 +127,7 @@
     videoSection.classList.add("is-visible");
     showVideoHint();
 
+    prepareVideo();
     window.setTimeout(tryPlayVideo, VIDEO_FADE_DELAY_MS);
   }
 
@@ -104,16 +138,6 @@
   function onLetterAnimationEnd(event) {
     if (event.animationName === "letter-rise") {
       revealVideo();
-    }
-  }
-
-  function tryPlayVideo() {
-    var playPromise = video.play();
-
-    if (playPromise && typeof playPromise.then === "function") {
-      playPromise.catch(function () {
-        video.setAttribute("controls", "");
-      });
     }
   }
 
@@ -129,6 +153,7 @@
     hasOpened = true;
 
     hideButton();
+    prepareVideo();
 
     window.setTimeout(function () {
       openEnvelope();
