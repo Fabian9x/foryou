@@ -1,0 +1,6 @@
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Duplicado del video (usar assets/video.mp4)
+assets/WhatsApp*

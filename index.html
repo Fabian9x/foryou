@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Tengo algo especial para ti.">
+  <meta name="theme-color" content="#f7f3ef">
+
+  <!-- Open Graph — update og:url and og:image when you publish -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tengo algo para ti">
+  <meta property="og:description" content="Hay cosas que no se dicen todos los días, pero hoy quería hacer algo especial para ti.">
+  <meta property="og:image" content="assets/poster.jpg">
+  <meta property="og:locale" content="es_ES">
+
+  <title>Tengo algo para ti</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page" id="main">
+    <header class="page__header">
+      <!-- Change the title text here -->
+      <h1 class="page__title">Tengo algo para ti</h1>
+    </header>
+
+    <section class="scene" aria-labelledby="envelope-label">
+      <h2 id="envelope-label" class="visually-hidden">Carta cerrada</h2>
+
+      <div class="envelope" id="envelope" aria-hidden="false">
+        <div class="envelope__shadow" aria-hidden="true"></div>
+
+        <div class="envelope__body">
+          <div class="envelope__pocket" aria-hidden="true"></div>
+
+          <div class="envelope__lip" aria-hidden="true"></div>
+
+          <div class="envelope__flap-hinge" aria-hidden="true">
+            <div class="envelope__flap envelope__flap--outer"></div>
+            <div class="envelope__flap envelope__flap--inner"></div>
+          </div>
+
+          <div class="envelope__fold envelope__fold--left" aria-hidden="true"></div>
+          <div class="envelope__fold envelope__fold--right" aria-hidden="true"></div>
+          <div class="envelope__seal" aria-hidden="true"></div>
+        </div>
+
+        <!-- Carta fuera del body para quedar siempre encima al abrir -->
+        <article class="envelope__letter" id="letter">
+          <!-- Change the letter message here -->
+          <p class="envelope__message">
+            Hay cosas que no se dicen todos los días, pero hoy quería pedirte perdón.
+          </p>
+        </article>
+
+        <!-- Foto en forma de corazón — cambia la imagen en assets/couple.jpg -->
+        <div class="envelope__heart" aria-hidden="true">
+          <div class="envelope__heart-frame">
+            <div class="envelope__heart-photo">
+              <img
+                class="envelope__heart-img"
+                src="assets/couple.jpg"
+                alt=""
+                width="120"
+                height="120"
+                decoding="async"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="actions" id="actions">
+      <!-- Button label — change text in the button below -->
+      <button type="button" class="btn-open" id="open-btn" aria-controls="letter video-section">
+        Abrir carta
+      </button>
+    </div>
+
+    <div class="video-hint" id="video-hint" aria-hidden="true">
+      <span class="visually-hidden">Mira el video abajo</span>
+      <svg class="video-hint__icon" viewBox="0 0 24 44" aria-hidden="true">
+        <path class="video-hint__chevron" d="M6 8 L12 16 L18 8" />
+        <path class="video-hint__chevron video-hint__chevron--soft" d="M6 20 L12 28 L18 20" />
+        <path class="video-hint__chevron video-hint__chevron--soft" d="M6 32 L12 40 L18 32" />
+      </svg>
+    </div>
+
+    <section
+      class="video-section"
+      id="video-section"
+      aria-label="Video"
+      hidden
+    >
+      <div class="video-section__inner">
+        <!-- Video en assets/video.mp4 -->
+        <video
+          id="main-video"
+          class="video-section__player"
+          controls
+          playsinline
+          preload="metadata"
+          poster="assets/couple.jpg"
+        >
+          <source src="assets/video.mp4" type="video/mp4">
+          Tu navegador no admite la reproducción de video.
+        </video>
+
+        <p class="video-section__fallback" id="video-fallback" hidden>
+          No se pudo cargar el video. Comprueba que el archivo
+          <code>assets/video.mp4</code> esté en el repositorio.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
